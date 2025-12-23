@@ -1,12 +1,36 @@
 import streamlit as st
 import pandas as pd
+import base64
+from pathlib import Path
+
+st.set_page_config(layout="wide")
+
+# -------------------------------------------
+# * Carregamento de um fundo animado no site
+# -------------------------------------------
+video_path = Path("style/cover.mp4")
+with open(video_path, "rb") as video_file:
+    video_bytes = video_file.read()
+    video_base64 = base64.b64encode(video_bytes).decode()
+
+# HTML do vídeo
+video_html = f"""
+<video autoplay loop muted playsinline id="video-background">
+    <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
+</video>
+<div id="video-overlay"></div>
+"""
+
+st.markdown(video_html, unsafe_allow_html=True)
+
+#  Leitura do Arquivo CSS
+with open("style/style.css", encoding="utf-8") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-# Abertura do arquivo css para utilizar o fundo animado
-with open("./style/style.css") as fundo:
-    st.markdown(f"<style>{fundo.read()}</style>",unsafe_allow_html=True)
-
-# Texto ínicial da página
+# ---------------------------
+# * Texto ínicial da página
+# ---------------------------
 st.title('Analisador de Produtos - Mercado Livre')
 st.write('Este dashboard aprensenta uma análise dos produtos mais vendidos do site da **:yellow[Mercado Livre]**, coletados diretamente  utilizando **:green[Web Scraping]** para auxiliar análises exploratórias e comparativas.')
 
@@ -212,9 +236,8 @@ if df_metrica is not None:
     diferenca_percentual = ((media_original - media_final) / media_original) * 100
     metrica(metrica=metrica3, titulo='Média de Preço com Desconto', funcao=f"{funcao.media_preco_final(df_metrica):.2f}", delta=True, valor_delta=f"Economia de: {diferenca_percentual:.2f}%")
     
-    diferenca = funcao.produto_mais_caro(df_metrica) - funcao.produto_mais_barato(df_metrica)
-    metrica(metrica=metrica4, titulo='Produto mais barato', funcao=funcao.produto_mais_barato(df_metrica), delta=True, valor_delta=f"R${diferenca} vs mais caro")
-    metrica(metrica=metrica5, titulo='Produto mais caro', funcao=funcao.produto_mais_caro(df_metrica), delta=True, valor_delta=f"R${diferenca} vs mais barato", cor_delta='inverse')
+    metrica(metrica=metrica4, titulo='Produto mais barato', funcao=funcao.produto_mais_barato(df_metrica))
+    metrica(metrica=metrica5, titulo='Produto mais caro', funcao=funcao.produto_mais_caro(df_metrica))
     metrica(metrica=metrica6, titulo='Soma total de preços', funcao=funcao.soma_total(df_metrica))
 
 else:
@@ -228,6 +251,33 @@ import plotly.express as px
 
 st.divider()
 st.subheader('Gráfico Dinâmico')
+st.write('Explore as combinações das colunas e suas relações.')
+
+escolha = st.selectbox(
+    label='Escolha uma categoria para visualizar:',
+    options=['Nenhuma'] + list(nome_arquivos.keys())
+)
+
+# Usuário seleciona ua categoria para visualizar o gráfico
+df_grafico = carregar_arquivo(escolha, nome_arquivos)
+
+if escolha == 'Nenhuma':
+    st.info('Nenhuma coluna selecionada.')
+else:
+    coluna1, coluna2 = st.columns(2)
+    with coluna1:
+        opcao1 = st.selectbox('Selecione a 1ª coluna:', df_grafico.columns.drop(['imagem', 'link']))
+    with coluna2:
+        opcao2 = st.selectbox('Selecione a 2ª coluna:', df_grafico.columns.drop(['imagem', 'link', opcao1]))
+
+    escolha_ordenacao = st.selectbox('(OPCIONAL) Ordene os valores do gráfico a partir da coluna desejada', df_grafico.columns)
 
 
+###### continuar desenvolvendo a parte de gráficos
 
+    
+    df_grafico_ordenado = df_grafico.sort_values(by=escolha_ordenacao, ascending=True)
+    
+    grafico = px.bar(df_grafico_ordenado, x=opcao1, y=opcao2, color=opcao1, title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].')
+    
+    st.plotly_chart(grafico)
