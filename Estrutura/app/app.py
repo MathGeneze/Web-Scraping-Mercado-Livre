@@ -270,14 +270,7 @@ else:
     with coluna2:
         opcao2 = st.selectbox('Selecione a 2ª coluna:', df_grafico.columns.drop(['imagem', 'link', opcao1]))
 
-    escolha_ordenacao = st.selectbox('(OPCIONAL) Ordene os valores do gráfico a partir da coluna desejada', df_grafico.columns)
-
-
-###### continuar desenvolvendo a parte de gráficos
-
     
-    df_grafico_ordenado = df_grafico.sort_values(by=escolha_ordenacao, ascending=True)
-    
-    grafico = px.bar(df_grafico_ordenado, x=opcao1, y=opcao2, color=opcao1, title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].')
+    grafico = px.bar(df_grafico, x=opcao1, y=opcao2, color=opcao1, title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].', text_auto=True)
     
     st.plotly_chart(grafico)
