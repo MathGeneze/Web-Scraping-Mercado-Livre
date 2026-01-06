@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import base64
-from pathlib import Path
 import plotly.express as px
+from pathlib import Path
 
 
 # -------------------------------------------
@@ -31,7 +31,7 @@ with open("Estrutura/style/style.css", encoding="utf-8") as f:
 # ---------------------------
 # * Texto ínicial da página
 # ---------------------------
-st.title('Analisador de Produtos - Mercado Livre')
+st.title('📦 Analisador de Produtos - Mercado Livre')
 st.write(
     'Este dashboard aprensenta uma análise dos produtos mais vendidos do site da **:yellow[Mercado Livre]**, coletados diretamente  utilizando **:green[Web Scraping]** para auxiliar análises exploratórias e comparativas.')
 
@@ -54,8 +54,6 @@ nome_arquivos = {
 # -----------------------------------
 # Função de Carregamento de arquivo
 # -----------------------------------
-
-
 def carregar_arquivo(escolha_usuario: str, dicionario: dict) -> pd.DataFrame | None:
     """
     Retorna um DataFrame com base na escolha do usuário.
@@ -74,7 +72,7 @@ def carregar_arquivo(escolha_usuario: str, dicionario: dict) -> pd.DataFrame | N
 # * Tabela Dinâmica de Produtos
 # -------------------------------
 st.divider()
-st.subheader('Tabela Dinâmica de Produtos')
+st.subheader('💻 Tabela Dinâmica de Produtos')
 st.write(
     'Cada categoria representa um :orange[**Arquivo CSV**] que contém os dados mais relevantes de cada produto.')
 
@@ -96,6 +94,7 @@ if df_tabela is not None:
         # Identifica colunas categóricas (texto) e numéricas
         colunas_categoricas = df_tabela.select_dtypes(exclude='number').columns
         colunas_numericas = df_tabela.select_dtypes(include='number').columns
+        
         # Quantidade de colunas categóricas e numéricas
         qtd_colunas_categ = len(colunas_categoricas)
         qtd_colunas_num = len(colunas_numericas)
@@ -148,13 +147,13 @@ if df_tabela is not None:
             else:
                 return f":{cor}[{primeiras}]"
 
-        # > Coluna 1: Imagem do produto
+        # ! Coluna 1: Imagem do produto
         with col1:
             st.image(
                 df_tabela['imagem'][id_produto],
                 caption=F'**Imagem: {colorir_primeiras_palavras(df_tabela["produto"][id_produto], cor="green")}.**')
 
-        # > Coluna 2: Informações o produto estilizadas
+        # ! Coluna 2: Informações o produto estilizadas
         with col2:
             # * --- Nome do produto --- #
             st.write(
@@ -203,7 +202,7 @@ else:
 from Estrutura.src.metricas import estatisticas as funcao
 
 st.divider()
-st.subheader('Estatísticas Gerais')
+st.subheader('📈 Estatísticas Gerais')
 st.write('Explore as estatísticas de cada categoria e tire suas próprias conclusões.')
 
 # Controle de Segmento para ficar visualmente mais facil de alterar entre as categorias
@@ -220,11 +219,11 @@ df_metrica = carregar_arquivo(aba, nome_arquivos)
 metrica1, metrica2, metrica3 = st.columns(3)
 metrica4, metrica5, metrica6 = st.columns(3)
 
+
 # --------------------------------
 # * Função que cria uma métrica
 # --------------------------------
-
-
+# Função que cria uma métrica personalizada 
 def metrica(metrica, titulo, funcao, delta=False, valor_delta=0, cor_delta='normal'):
     with metrica:
         if delta == False:
@@ -244,28 +243,23 @@ def metrica(metrica, titulo, funcao, delta=False, valor_delta=0, cor_delta='norm
 
 
 if df_metrica is not None:
-    metrica(metrica=metrica1, titulo='Quantidade de Produtos', funcao=funcao.qtd_produtos(
-        df_metrica), delta=True, valor_delta="100%", cor_delta='off')
-    metrica(metrica=metrica2, titulo='Média de Preço sem Desconto',
-            funcao=f"{funcao.media_preco_original(df_metrica):.2f}")
+    metrica(metrica=metrica1, titulo='Quantidade de Produtos', funcao=funcao.qtd_produtos(df_metrica), delta=True, valor_delta="100%", cor_delta='off')
+    metrica(metrica=metrica2, titulo='Média de Preço sem Desconto', funcao=f"{funcao.media_preco_original(df_metrica):.2f}")
 
     # * Calculando o valor entre as médias em forma de porcentagem
-    df_desc = df_metrica[df_metrica['preco_final'].notna() & (
-        df_metrica['preco_final'] < df_metrica['preco_original'])]
+    df_desc = df_metrica[df_metrica['preco_final'].notna() & (df_metrica['preco_final'] < df_metrica['preco_original'])]
+    
+    # Média dos preços sem (media original) e com desconto (media final)
     media_original = df_desc['preco_original'].mean()
     media_final = df_desc['preco_final'].mean()
-
-    diferenca_percentual = (
-        (media_original - media_final) / media_original) * 100
+    diferenca_percentual = ((media_original - media_final) / media_original) * 100
+    
     metrica(metrica=metrica3, titulo='Média de Preço com Desconto',
             funcao=f"{funcao.media_preco_final(df_metrica):.2f}", delta=True, valor_delta=f"Economia de: {diferenca_percentual:.2f}%")
 
-    metrica(metrica=metrica4, titulo='Produto mais barato',
-            funcao=funcao.produto_mais_barato(df_metrica))
-    metrica(metrica=metrica5, titulo='Produto mais caro',
-            funcao=funcao.produto_mais_caro(df_metrica))
-    metrica(metrica=metrica6, titulo='Soma total de preços',
-            funcao=funcao.soma_total(df_metrica))
+    metrica(metrica=metrica4, titulo='Produto mais barato', funcao=funcao.produto_mais_barato(df_metrica))
+    metrica(metrica=metrica5, titulo='Produto mais caro', funcao=funcao.produto_mais_caro(df_metrica))
+    metrica(metrica=metrica6, titulo='Soma total de preços', funcao=funcao.soma_total(df_metrica))
 
 else:
     st.warning('Selecione uma categoria para ver as estatísticas.', icon=':material/warning:')
@@ -274,9 +268,8 @@ else:
 # --------------------------------
 # * Gráficos Dinâmicos
 # --------------------------------
-
 st.divider()
-st.subheader('Gráfico Dinâmico')
+st.subheader('📊 Gráfico Dinâmico')
 st.write('Explore as combinações das colunas e suas relações.')
 
 escolha = st.selectbox(
@@ -284,7 +277,7 @@ escolha = st.selectbox(
     options=['Nenhuma'] + list(nome_arquivos.keys())
 )
 
-# Usuário seleciona ua categoria para visualizar o gráfico
+# Usuário seleciona uma categoria para visualizar o gráfico
 df_grafico = carregar_arquivo(escolha, nome_arquivos)
 
 if escolha == 'Nenhuma':
