@@ -193,11 +193,18 @@ if df_tabela is not None:
             st.link_button('Clique para acessar o produto',
                            url=df_tabela['link'][id_produto], width='stretch')
 
+else:
+    st.warning('Nenhuma categoria selecionada!', icon=':material/warning:')
+
+
 
 # -------------------------
 # * Estatísticas Gerais
 # -------------------------
 from Estrutura.src.metricas import estatisticas as funcao
+
+st.divider()
+st.subheader('Estatísticas Gerais')
 st.write('Explore as estatísticas de cada categoria e tire suas próprias conclusões.')
 
 # Controle de Segmento para ficar visualmente mais facil de alterar entre as categorias
@@ -262,7 +269,7 @@ if df_metrica is not None:
             funcao=funcao.soma_total(df_metrica))
 
 else:
-    st.info('Selecione uma categoria para ver as estatísticas.')
+    st.warning('Selecione uma categoria para ver as estatísticas.', icon=':material/warning:')
 
 
 # --------------------------------
@@ -282,7 +289,7 @@ escolha = st.selectbox(
 df_grafico = carregar_arquivo(escolha, nome_arquivos)
 
 if escolha == 'Nenhuma':
-    st.info('Nenhuma coluna selecionada.')
+    st.warning('Nenhuma coluna selecionada!', icon=':material/warning:')
 else:
     coluna1, coluna2 = st.columns(2)
     with coluna1:
