@@ -4,7 +4,6 @@ import base64
 from pathlib import Path
 import plotly.express as px
 
-st.set_page_config(layout="wide")
 
 # -------------------------------------------
 # * Carregamento de um fundo animado no site
