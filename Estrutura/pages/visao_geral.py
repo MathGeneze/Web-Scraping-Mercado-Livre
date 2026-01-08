@@ -6,12 +6,6 @@ import streamlit as st
 
 
 
-st.title('Visão Geral')
-
-
-
-
-
 
 # * - Introdução
 # - Exemplifique o projeto em poucas linhas, sem entrar em código, foando na clareza, não na complexidade.
