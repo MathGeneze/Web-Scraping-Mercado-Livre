@@ -1,13 +1,15 @@
 import streamlit as st
+import base64
 
 # * Fundo animado da página
 with open('Estrutura/style/style2.css') as fundo:
     st.markdown(f'<style>{fundo.read()}</style>',
         unsafe_allow_html=True)
     
-
+    
+# ------------------
 # * - Introdução
-# - Exemplifique o projeto em poucas linhas, sem entrar em código, foando na clareza, não na complexidade.
+# ------------------
 st.title('💡 Introdução')
 st.write("""
          Este projeto é um :yellow[**ETL simples**]  (processo que envolve :orange[**Extração**], :blue[**Transformação**] e :green[**Carregamento**] de dados) separados em 2 partes:
@@ -18,18 +20,22 @@ st.write("""
          """)
 
 
+# ---------------------------------------------
 # * - Como o projeto funciona (fluxo geral)
-# - Sem código, apenas lógica.
-# - Posso usar um passo a passo ou até um fluxograma simples.
+# ---------------------------------------------
 st.divider()
 st.title('⚙️ Como o projeto funciona?')
 st.write('Abaixo segue um fluxograma mostrando o processo de :orange[**Extração**] e :blue[**Transformação**] dos dados de um jeito simplificado.')
 
-st.image('Estrutura/style/fluxograma.png', caption='Fluxograma mostrando o processo de Extração de Dados',)
+# ! Expander para o usuário visualizar o fluxograma
+with st.expander('Clique aqui para ver o Fluxograma do programa:', icon=':material/graph_2:'):
+    st.image('Estrutura/style/fluxograma.png', caption='Fluxograma mostrando o processo de Extração de Dados',)
 
 
 
+# ----------------------------------
 # * - O problema que ele resolve
+# ----------------------------------
 # - Aqui posso explicar algo como: Necessidade de automação na coleta de informações públicas;
 # - Também em como é extreamamente complexo e dificil acessar a API da Mercado Livre.
 st.divider()
@@ -37,7 +43,10 @@ st.title('✅ O problema que ele resolve')
 
 
 
+
+# ------------------------------
 # * - Tecnologias utilizadas
+# ------------------------------
 # - Tecnologia + o papel dela no projeto.
 st.divider()
 st.title('🖥️ Tecnologias Utilizadas')
@@ -46,13 +55,40 @@ st.write('Abaixo segue a lista das tecnologias utilizadas neste projeto:')
 # ! Usuário seleciona uma tecnologia e abre um card com sua descrição
 tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', ['Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
 
+coluna1, coluna2 = st.columns(2)
+if tecnologia != 'Nenhum':
+    with coluna1:
+        st.image(f'Estrutura/style/icons/{tecnologia}.png', f'*Imagem do {tecnologia}*')
+        
+    with coluna2:
+        with open(f'Estrutura/fonts/{tecnologia}.txt', 'r', encoding='utf-8') as leitura:
+            
+            def texto_colorido(texto):
+                if texto == 'Python':
+                    cor = 'yellow'
+                elif texto == 'Selenium':
+                    cor = 'green'
+                elif texto == 'Pandas':
+                    cor = 'blue'
+                elif texto == 'Streamlit':
+                    cor = 'red'
+                elif texto == 'Plotly':
+                    cor = 'orange'
+                st.subheader(f'Pra que serve o :{cor}[{texto}]?')
+            
+            texto_colorido(tecnologia)
+            st.write(leitura.read())
+
+else:
+    st.warning('Nenhuma tecnologia selecionada!', icon=':material/info:')
 
 
 
 
 
-
+# ----------------------------------------
 # * - Aprendizados e Objetivos Futuros
+# ----------------------------------------
 # - O que aprendi com o projeto / O que pretendo melhorar.
 # - Ideias de melhorias futuras
 
