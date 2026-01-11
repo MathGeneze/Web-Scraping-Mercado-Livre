@@ -61,11 +61,13 @@ tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', [
 coluna1, coluna2 = st.columns(2)
 if tecnologia != 'Nenhum':
     with coluna1:
-        icon_path = Path(__file__).parent.parent / 'style' / 'icons' / f'{tecnologia.lower()}.png'
+        icon_path = Path(__file__).parent.parent / 'style' / \
+            'icons' / f'{tecnologia.lower()}.png'
         st.image(str(icon_path), f'*Imagem do {tecnologia}*')
 
     with coluna2:
-        font_path = Path(__file__).parent.parent / 'fonts' / f'{tecnologia.lower()}.txt'
+        font_path = Path(__file__).parent.parent / 'fonts' / \
+            f'{tecnologia.lower()}.txt'
         with open(font_path, 'r', encoding='utf-8') as leitura:
 
             def texto_colorido(texto):
