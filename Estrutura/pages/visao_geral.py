@@ -40,23 +40,23 @@ with st.expander('Clique aqui para ver o Fluxograma do programa:', icon=':materi
 # ----------------------------------
 # * - O problema que ele resolve
 # ----------------------------------
-# - Aqui posso explicar algo como: Necessidade de automação na coleta de informações públicas;
-# - Também em como é extreamamente complexo e dificil acessar a API da Mercado Livre.
 st.divider()
 st.title('✅ O problema que ele resolve')
+st.write('Particularmente, achei a :orange[**API**] do :yellow[**Mercado Livre**] de difícil acesso, mais especificamente dizendo sobre a parte de :orange[**Autenticação**] do próprio login, que exige documentos pessoais e simplesmente você não consegue realizar um simples login.')
+
+st.write('O problema que o meu projeto resolveu é exatamente a :green[**coleta de dados**] de forma alternativa a uma API, extraindo os dados diretamente do site, sem precisar de chaves e requisições. Com esses dados, o acesso a insights sobre os produtos mais vendidos da Mercado Livre é facilitado com o site do :red[**Streamlit**].')
 
 
 # ------------------------------
 # * - Tecnologias utilizadas
 # ------------------------------
-# - Tecnologia + o papel dela no projeto.
 st.divider()
 st.title('🖥️ Tecnologias Utilizadas')
 st.write('Abaixo segue a lista das tecnologias utilizadas neste projeto:')
 
 # ! Usuário seleciona uma tecnologia e abre um card com sua descrição
-tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', [
-                          'Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
+tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', ['Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
+
 
 coluna1, coluna2 = st.columns(2)
 if tecnologia != 'Nenhum':
@@ -93,5 +93,19 @@ else:
 # ----------------------------------------
 # * - Aprendizados e Objetivos Futuros
 # ----------------------------------------
-# - O que aprendi com o projeto / O que pretendo melhorar.
-# - Ideias de melhorias futuras
+st.divider()
+st.title('📒 Aprendizados e Objetivos Futuros')
+
+st.subheader('▶ O que aprendi com o projeto?')
+st.write('Esse foi um projeto no qual eu aprendi que coletar dados vai muito além do que simplesmente usar uma biblioteca e extraí-los, é preciso entender a :blue[**importância do dado**], o jeito que esse dado é tratado para posteriormente gerar uma informação.')
+
+st.subheader('▶ Ideias de Melhorias Futuras')
+st.write("""
+         Atualmente, o projeto possui algumas limitações, como: 
+         * :red[✘ **Problema**]: Dados salvos em pastas locais do projeto;
+            * :green[✔ **Solução**]: Salvar os dados em um Banco de Dados.
+         * :red[✘ **Problema**]: O usuário que utilizar apenas o site, não consegue atualizar os dados;
+            * :green[✔ **Solução**]: Criar um botão que rode o scrpit de extração e atualize os dados.
+         """)
+
+

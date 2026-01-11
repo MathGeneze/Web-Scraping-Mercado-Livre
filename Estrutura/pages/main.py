@@ -9,7 +9,7 @@ from pathlib import Path
 # -------------------------------------------
 # * Carregamento de um fundo animado no site
 # -------------------------------------------
-video_path = Path(__file__).parent.parent / 'style' / 'cover.mp4'
+video_path = Path(__file__).parent.parent / 'style' / 'videos' / 'cover.mp4'
 with open(video_path, "rb") as video_file:
     video_bytes = video_file.read()
     video_base64 = base64.b64encode(video_bytes).decode()
