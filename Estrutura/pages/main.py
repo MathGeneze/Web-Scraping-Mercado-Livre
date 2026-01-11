@@ -1,3 +1,4 @@
+from Estrutura.src.metricas import estatisticas as funcao
 import streamlit as st
 import pandas as pd
 import base64
@@ -55,6 +56,8 @@ nome_arquivos = {
 # -----------------------------------
 # Função de Carregamento de arquivo
 # -----------------------------------
+
+
 def carregar_arquivo(escolha_usuario: str, dicionario: dict) -> pd.DataFrame | None:
     """
     Retorna um DataFrame com base na escolha do usuário.
@@ -64,7 +67,8 @@ def carregar_arquivo(escolha_usuario: str, dicionario: dict) -> pd.DataFrame | N
         return None
 
     nome_arquivo = dicionario[escolha_usuario]
-    caminho = Path(__file__).parent.parent.parent / 'Estrutura' / 'data' / f'{nome_arquivo}.csv'
+    caminho = Path(__file__).parent.parent.parent / \
+        'Estrutura' / 'data' / f'{nome_arquivo}.csv'
 
     return pd.read_csv(caminho)
 
@@ -95,7 +99,7 @@ if df_tabela is not None:
         # Identifica colunas categóricas (texto) e numéricas
         colunas_categoricas = df_tabela.select_dtypes(exclude='number').columns
         colunas_numericas = df_tabela.select_dtypes(include='number').columns
-        
+
         # Quantidade de colunas categóricas e numéricas
         qtd_colunas_categ = len(colunas_categoricas)
         qtd_colunas_num = len(colunas_numericas)
@@ -196,11 +200,9 @@ else:
     st.warning('Nenhuma categoria selecionada!', icon=':material/warning:')
 
 
-
 # -------------------------
 # * Estatísticas Gerais
 # -------------------------
-from Estrutura.src.metricas import estatisticas as funcao
 
 st.divider()
 st.subheader('📈 Estatísticas Gerais')
@@ -224,7 +226,7 @@ metrica4, metrica5, metrica6 = st.columns(3)
 # --------------------------------
 # * Função que cria uma métrica
 # --------------------------------
-# Função que cria uma métrica personalizada 
+# Função que cria uma métrica personalizada
 def metrica(metrica, titulo, funcao, delta=False, valor_delta=0, cor_delta='normal'):
     with metrica:
         if delta == False:
@@ -244,26 +246,34 @@ def metrica(metrica, titulo, funcao, delta=False, valor_delta=0, cor_delta='norm
 
 
 if df_metrica is not None:
-    metrica(metrica=metrica1, titulo='Quantidade de Produtos', funcao=funcao.qtd_produtos(df_metrica), delta=True, valor_delta="100%", cor_delta='off')
-    metrica(metrica=metrica2, titulo='Média de Preço sem Desconto', funcao=f"{funcao.media_preco_original(df_metrica):.2f}")
+    metrica(metrica=metrica1, titulo='Quantidade de Produtos', funcao=funcao.qtd_produtos(
+        df_metrica), delta=True, valor_delta="100%", cor_delta='off')
+    metrica(metrica=metrica2, titulo='Média de Preço sem Desconto',
+            funcao=f"{funcao.media_preco_original(df_metrica):.2f}")
 
     # * Calculando o valor entre as médias em forma de porcentagem
-    df_desc = df_metrica[df_metrica['preco_final'].notna() & (df_metrica['preco_final'] < df_metrica['preco_original'])]
-    
+    df_desc = df_metrica[df_metrica['preco_final'].notna() & (
+        df_metrica['preco_final'] < df_metrica['preco_original'])]
+
     # Média dos preços sem (media original) e com desconto (media final)
     media_original = df_desc['preco_original'].mean()
     media_final = df_desc['preco_final'].mean()
-    diferenca_percentual = ((media_original - media_final) / media_original) * 100
-    
+    diferenca_percentual = (
+        (media_original - media_final) / media_original) * 100
+
     metrica(metrica=metrica3, titulo='Média de Preço com Desconto',
             funcao=f"{funcao.media_preco_final(df_metrica):.2f}", delta=True, valor_delta=f"Economia de: {diferenca_percentual:.2f}%")
 
-    metrica(metrica=metrica4, titulo='Produto mais barato', funcao=funcao.produto_mais_barato(df_metrica))
-    metrica(metrica=metrica5, titulo='Produto mais caro', funcao=funcao.produto_mais_caro(df_metrica))
-    metrica(metrica=metrica6, titulo='Soma total de preços', funcao=funcao.soma_total(df_metrica))
+    metrica(metrica=metrica4, titulo='Produto mais barato',
+            funcao=funcao.produto_mais_barato(df_metrica))
+    metrica(metrica=metrica5, titulo='Produto mais caro',
+            funcao=funcao.produto_mais_caro(df_metrica))
+    metrica(metrica=metrica6, titulo='Soma total de preços',
+            funcao=funcao.soma_total(df_metrica))
 
 else:
-    st.warning('Selecione uma categoria para ver as estatísticas.', icon=':material/warning:')
+    st.warning('Selecione uma categoria para ver as estatísticas.',
+               icon=':material/warning:')
 
 
 # --------------------------------

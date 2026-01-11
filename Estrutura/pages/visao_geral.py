@@ -6,9 +6,9 @@ from pathlib import Path
 style_path = Path(__file__).parent.parent / 'style' / 'style2.css'
 with open(style_path) as fundo:
     st.markdown(f'<style>{fundo.read()}</style>',
-        unsafe_allow_html=True)
-    
-    
+                unsafe_allow_html=True)
+
+
 # ------------------
 # * - Introdução
 # ------------------
@@ -27,13 +27,14 @@ st.write("""
 # ---------------------------------------------
 st.divider()
 st.title('⚙️ Como o projeto funciona?')
-st.write('Abaixo segue um fluxograma mostrando o processo de :orange[**Extração**] e :blue[**Transformação**] dos dados de um jeito simplificado.')
+st.write(
+    'Abaixo segue um fluxograma mostrando o processo de :orange[**Extração**] e :blue[**Transformação**] dos dados de um jeito simplificado.')
 
 # ! Expander para o usuário visualizar o fluxograma
 with st.expander('Clique aqui para ver o Fluxograma do programa:', icon=':material/graph_2:'):
     image_path = Path(__file__).parent.parent / 'style' / 'fluxograma.png'
-    st.image(str(image_path), caption='Fluxograma mostrando o processo de Extração de Dados',)
-
+    st.image(str(image_path),
+             caption='Fluxograma mostrando o processo de Extração de Dados',)
 
 
 # ----------------------------------
@@ -45,8 +46,6 @@ st.divider()
 st.title('✅ O problema que ele resolve')
 
 
-
-
 # ------------------------------
 # * - Tecnologias utilizadas
 # ------------------------------
@@ -56,16 +55,18 @@ st.title('🖥️ Tecnologias Utilizadas')
 st.write('Abaixo segue a lista das tecnologias utilizadas neste projeto:')
 
 # ! Usuário seleciona uma tecnologia e abre um card com sua descrição
-tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', ['Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
+tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', [
+                          'Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
 
 coluna1, coluna2 = st.columns(2)
 if tecnologia != 'Nenhum':
     with coluna1:
-        st.image(f'Estrutura/style/icons/{tecnologia}.png', f'*Imagem do {tecnologia}*')
-        
+        st.image(
+            f'Estrutura/style/icons/{tecnologia}.png', f'*Imagem do {tecnologia}*')
+
     with coluna2:
         with open(f'Estrutura/fonts/{tecnologia}.txt', 'r', encoding='utf-8') as leitura:
-            
+
             def texto_colorido(texto):
                 if texto == 'Python':
                     cor = 'yellow'
@@ -78,7 +79,7 @@ if tecnologia != 'Nenhum':
                 elif texto == 'Plotly':
                     cor = 'orange'
                 st.subheader(f'Pra que serve o :{cor}[{texto}]?')
-            
+
             texto_colorido(tecnologia)
             st.write(leitura.read())
 
@@ -86,13 +87,8 @@ else:
     st.warning('Nenhuma tecnologia selecionada!', icon=':material/info:')
 
 
-
-
-
 # ----------------------------------------
 # * - Aprendizados e Objetivos Futuros
 # ----------------------------------------
 # - O que aprendi com o projeto / O que pretendo melhorar.
 # - Ideias de melhorias futuras
-
-
