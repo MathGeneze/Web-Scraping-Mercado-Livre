@@ -1,1 +1,2 @@
-Selenium é uma biblioteca de Web Scraping
+:green[Selenium] é utilizado para automatizar a navegação e a coleta de dados na web.
+Ele permite que o projeto :green[**extraia informações diretamente do site**] da Mercado Livre de forma automática.

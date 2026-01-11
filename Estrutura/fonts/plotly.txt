@@ -1,1 +1,2 @@
-Plotly é uma biblioteca de Visualização Gráfica
+:orange[Plotly] é a ferramenta responsável pela :orange[**criação dos gráficos**] e visualizações interativas.
+Neste projeto, ela transforma os dados processados em gráficos claros e dinâmicos, facilitando a análise.

@@ -1,1 +1,2 @@
-Pandas é uma biblioteca
+:blue[Pandas] é a principal biblioteca utilizada quando o assunto é :blue[**manipular**] e :blue[**tratar dados**].
+Neste projeto, a função dela é limpar, organizar os dados coletados e depois os extrair para um arquivo CSV.

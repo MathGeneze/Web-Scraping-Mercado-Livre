@@ -1,1 +1,2 @@
-Streamlit é uma biblioteca
+:red[Streamlit] é o framework usado para criar a interface web do projeto.
+Ele permite transformar scripts em uma :red[**aplicação interativa**], onde o usuário pode navegar, visualizar dados e interagir com os resultados.

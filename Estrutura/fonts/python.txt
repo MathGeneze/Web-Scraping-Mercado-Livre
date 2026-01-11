@@ -1,1 +1,2 @@
-Python é uma linguagem
+:yellow[Python] é a linguagem principal do projeto.
+Ela é responsável por toda a :yellow[**lógica do sistema**], desde a coleta dos dados até o processamento e a geração das informações que o usuário visualiza.
