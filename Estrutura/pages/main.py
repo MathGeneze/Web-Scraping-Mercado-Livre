@@ -8,7 +8,7 @@ from pathlib import Path
 # -------------------------------------------
 # * Carregamento de um fundo animado no site
 # -------------------------------------------
-video_path = Path("Estrutura/style/cover.mp4")
+video_path = Path(__file__).parent.parent / 'style' / 'cover.mp4'
 with open(video_path, "rb") as video_file:
     video_bytes = video_file.read()
     video_base64 = base64.b64encode(video_bytes).decode()
@@ -24,7 +24,8 @@ video_html = f"""
 st.markdown(video_html, unsafe_allow_html=True)
 
 #  Leitura do Arquivo CSS
-with open("Estrutura/style/style.css", encoding="utf-8") as f:
+css_path = Path(__file__).parent.parent / 'style' / 'style.css'
+with open(css_path, encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
@@ -63,7 +64,7 @@ def carregar_arquivo(escolha_usuario: str, dicionario: dict) -> pd.DataFrame | N
         return None
 
     nome_arquivo = dicionario[escolha_usuario]
-    caminho = f'./Estrutura/data/{nome_arquivo}.csv'
+    caminho = Path(__file__).parent.parent.parent / 'Estrutura' / 'data' / f'{nome_arquivo}.csv'
 
     return pd.read_csv(caminho)
 

@@ -1,8 +1,10 @@
 import streamlit as st
 import base64
+from pathlib import Path
 
 # * Fundo animado da página
-with open('Estrutura/style/style2.css') as fundo:
+style_path = Path(__file__).parent.parent / 'style' / 'style2.css'
+with open(style_path) as fundo:
     st.markdown(f'<style>{fundo.read()}</style>',
         unsafe_allow_html=True)
     
@@ -29,7 +31,8 @@ st.write('Abaixo segue um fluxograma mostrando o processo de :orange[**Extraçã
 
 # ! Expander para o usuário visualizar o fluxograma
 with st.expander('Clique aqui para ver o Fluxograma do programa:', icon=':material/graph_2:'):
-    st.image('Estrutura/style/fluxograma.png', caption='Fluxograma mostrando o processo de Extração de Dados',)
+    image_path = Path(__file__).parent.parent / 'style' / 'fluxograma.png'
+    st.image(str(image_path), caption='Fluxograma mostrando o processo de Extração de Dados',)
 
 
 
