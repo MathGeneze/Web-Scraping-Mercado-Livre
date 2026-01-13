@@ -32,11 +32,24 @@ with open(css_path, encoding="utf-8") as f:
 # -----------------------
 st.title('📤 Extração de Dados')
 st.write('Abaixo ressaltarei as partes mais relevântes do código para melhor entendimento.')
-st.html('<br>')
+
+
+# * Link para acessar as outras páginas do site
+st.write('▶ Clique nos títulos abaixo e explore mais sobre o Projeto!')
+botao1, botao2, botao3 = st.columns(3)
+with botao1:
+    st.page_link('Estrutura/pages/main.py', label='Analise dos Produtos', icon=':material/reply:', width='stretch')
+
+with botao2:
+    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ Repositório do Projeto', width='stretch')
+
+with botao3:
+    st.page_link('Estrutura/pages/web_scraping.py', label='Extração de Dados', icon=':material/prompt_suggestion:', width='stretch')
 
 # -------------------------------
 # * Parâmetros das categorias
 # -------------------------------
+st.divider()
 st.subheader('🌐 Parâmetros das categorias')
 st.write('De início, importante reassaltar que o script entra em categorias pré-definidas de :orange[**Produtos mais Vendidos**] da :yellow[***Mercado Livre***] de forma automatizada. Uma forma prática de acessá-las é através dos parâmetros de cada categoria.')
 

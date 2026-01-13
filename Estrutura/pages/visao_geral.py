@@ -8,7 +8,6 @@ with open(style_path) as fundo:
     st.markdown(f'<style>{fundo.read()}</style>',
                 unsafe_allow_html=True)
 
-
 # ------------------
 # * - Introdução
 # ------------------
@@ -111,3 +110,15 @@ st.write("""
 
 st.subheader('▶ Agradecimentos Finais')
 st.write('Muito obrigado por visitar o meu projeto. Fique a vontade para clonar o repositório no GitHub e modificá-lo! :)')
+
+# * Link para acessar as outras páginas do site
+st.write('▶ Clique nos títulos abaixo e explore mais sobre o Projeto!')
+botao1, botao2, botao3 = st.columns(3)
+with botao1:
+    st.page_link('Estrutura/pages/main.py', label='Analise dos Produtos', icon=':material/reply:', width='stretch')
+
+with botao2:
+    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ Repositório do Projeto', width='stretch')
+
+with botao3:
+    st.page_link('Estrutura/pages/web_scraping.py', label='Extração de Dados', icon=':material/prompt_suggestion:', width='stretch')
