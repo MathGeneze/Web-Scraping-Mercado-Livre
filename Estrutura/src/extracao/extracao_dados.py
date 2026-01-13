@@ -118,6 +118,7 @@ for chave, valor in codigos_paginas.items():
     df = pd.DataFrame(dados)
     df.to_csv(f"Estrutura/data/files/{chave}.csv", index=False, encoding="utf-8")
 
+    
     # * Criando a conexão com o banco de dados para salva-los
     conn = sqlite3.connect('Estrutura/data/banco.db')
     df.to_sql('produtos', conn, if_exists='append', index=False)

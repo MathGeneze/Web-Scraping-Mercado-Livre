@@ -5,27 +5,30 @@ import base64
 # -------------------------------------------
 # * Carregamento de um fundo animado no site
 # -------------------------------------------
-video_path = Path(__file__).parent.parent / 'style' / 'videos' / 'web.mp4'
-with open(video_path, "rb") as video_file:
-    video_bytes = video_file.read()
-    video_base64 = base64.b64encode(video_bytes).decode()
+@st.cache_data
+def carregamento_cover():
+    video_path = Path(__file__).parent.parent / 'style' / 'videos' / 'web.mp4'
+    with open(video_path, "rb") as video_file:
+        video_bytes = video_file.read()
+        video_base64 = base64.b64encode(video_bytes).decode()
 
-# HTML do vídeo
-video_html = f"""
-<video autoplay loop muted playsinline id="video-background">
-    <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
-</video>
-<div id="video-overlay"></div>
-"""
+    # HTML do vídeo
+    video_html = f"""
+    <video autoplay loop muted playsinline id="video-background">
+        <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
+    </video>
+    <div id="video-overlay"></div>
+    """
 
-st.markdown(video_html, unsafe_allow_html=True)
+    st.markdown(video_html, unsafe_allow_html=True)
 
-#  Leitura do Arquivo CSS
-css_path = Path(__file__).parent.parent / 'style' / 'style.css'
-with open(css_path, encoding="utf-8") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    #  Leitura do Arquivo CSS
+    css_path = Path(__file__).parent.parent / 'style' / 'style.css'
+    with open(css_path, encoding="utf-8") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-
+# * Carregando o fundo animado
+carregamento_cover()
 
 # -----------------------
 # * Extração de Dados
@@ -55,7 +58,7 @@ st.write('De início, importante reassaltar que o script entra em categorias pr�
 
 st.write('Observe na imagem abaixo que no final da URL do site, existe uma espécie de :red[**código de identificação**] da categoria, que na verdade é o parâmetro dela.')
 
-st.image('Estrutura/style/categoria.png', '*Imagem da categoria de eletrodomésticos*')
+st.image('Estrutura/style/image/categoria.png', '*Imagem da categoria de eletrodomésticos*')
 
 st.html('<br>')
 st.write('Então criei um dicionário com o :green[**Nome da Categoria**] :red[**+**] o :green[**Parâmetro da Categoria**]. O script percorrerá esse dicionário e assim que terminar de extrair os dados da primeira categoria, irá para segunda e assim sucessivamente.')

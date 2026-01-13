@@ -206,7 +206,7 @@ if df_tabela is not None:
 
             # * --- Botão para a página original do produto --- #
             st.link_button('Clique para acessar o produto',
-                           url=df_tabela['link'][id_produto], width='stretch')
+                           url=df_tabela['link'][id_produto], width='stretch', icon=':material/keyboard_double_arrow_right:')
 
 else:
     st.warning('Nenhuma categoria selecionada!', icon=':material/warning:')
