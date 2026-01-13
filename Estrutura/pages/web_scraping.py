@@ -27,22 +27,32 @@ with open(css_path, encoding="utf-8") as f:
 
 
 
-# Nesta página, vou mostrar o código que usei para extraír os dados e explicar o processo de extração.
-
-# Pensando em colocar gifs ou videos mostrando como é realizado esse processo de maneira dinâmica, prendendo o usuário e o conectando com a página
+# -----------------------
+# * Extração de Dados
+# -----------------------
 st.title('📤 Extração de Dados')
+st.write('Abaixo ressaltarei as partes mais relevântes do código para melhor entendimento.')
+st.html('<br>')
 
-st.subheader('Parâmetros dos sites')
-st.write('Os parâmetros')
-st.markdown("""
-            
+# -------------------------------
+# * Parâmetros das categorias
+# -------------------------------
+st.subheader('🌐 Parâmetros das categorias')
+st.write('De início, importante reassaltar que o script entra em categorias pré-definidas de :orange[**Produtos mais Vendidos**] da :yellow[***Mercado Livre***] de forma automatizada. Uma forma prática de acessá-las é através dos parâmetros de cada categoria.')
+
+st.write('Observe na imagem abaixo que no final da URL do site, existe uma espécie de :red[**código de identificação**] da categoria, que na verdade é o parâmetro dela.')
+
+st.image('Estrutura/style/categoria.png', '*Imagem da categoria de eletrodomésticos*')
+
+st.html('<br>')
+st.write('Então criei um dicionário com o :green[**Nome da Categoria**] :red[**+**] o :green[**Parâmetro da Categoria**]. O script percorrerá esse dicionário e assim que terminar de extrair os dados da primeira categoria, irá para segunda e assim sucessivamente.')
+
+st.markdown("""   
 ```python
-from selenium import webdriver
-
-# -----------------------------
+# --------------------------------------------------------------
 # Chave: nomes de categorias de produtos
 # Valor: parâmetro do site da mercado livre que redireciona para a categoria
-# -----------------------------
+# ---------------------------------------------------------------
 codigos_paginas = {
     'eletrodomestico': 'MLB5726',
     'celular': 'MLB1055',
@@ -51,18 +61,112 @@ codigos_paginas = {
     'informatica': 'MLB1648',
     'video_game': 'MLB186456'
 }
-
-drive = webdriver.Chrome()
-
-""")
+""", help='Trecho do código com os parâmetros do site')
 
 
 
+# ---------------------
+# * Elementos e XPATH
+# ---------------------
+st.divider()
+st.title('🛣️ Elementos e XPATH')
+st.write('Próximo passo é extrair os dados através do conceito de :orange[**XPATH**], que basicamente, é um :orange[**Identificador de Elementos do Site**]. Apartir dele, conseguimos identificar o caminho que leva até a informação que buscamos. Confira abaixo os tipos de dados extraídos.')
+
+# * Video de apresentação dos dados
+col1, col2 = st.columns(2)
+with col1:
+    st.video('Estrutura/style/videos/elementos.mp4', autoplay=True, loop=True)
+    
+
+# * Lista dos dados extraídos
+with col2:
+    st.write("""
+        ```python
+        # Lista de dados extraídos:
+        * Imagem + Link do produto;
+        * Classificação (1° mais vendido...);
+        * Nome do produto;
+        * Vendedor;
+        * Avaliação + Qtd de vendas
+        * Preço sem desconto;
+        * Preço com desconto (se tiver).
+             """)
+
+st.html('<br>')
+st.write('Apartir desssas informações, criei uma :blue[**função**] para :blue[**padronizar a extração de dados**], priorizando sempre um código limpo, legível para futuras manutenções. Código da função abaixo:')
+
+st.markdown("""
+    ```python
+    # -----------------------------------------------
+    # Função que extrai os dados de cada produto
+    # -----------------------------------------------
+    def extrair(item, xpath, atributo=None):
+        '''
+        Retorna o texto ou atributo do elemento.
+        Se nada for encontrado, retorna '' (string vazia).
+        '''
+        try:
+            elemento = item.find_element(By.XPATH, xpath)
+
+            # --- Se o parâmetro "atributo" for informado, a função extrairá o atributo do elemento (imagem ou link do produto), se não, retornará o texto do elemento --- #
+            if atributo:
+                return elemento.get_attribute(atributo) or None
+            return elemento.text or None
+        except:
+            return None
+            """)
 
 
+
+# -----------------------------
+# * Armazenamento dos dados
+# -----------------------------
+st.divider()
+st.title('🗄️ Armazenamento dos dados')
+st.write('Após o script extrair os dados de todos os produtos de uma determinada categoria, ele os armazena em uma :green[**lista-dicionário**], convertendo-a para um :green[**arquivo CSV**].')
+
+st.markdown("""
+    ```python
+    # -----------------------------
+# Loop principal
+# Acessa o site, scrolla para o final da página, extrai os dados e
+# salva em um dicionário
+# -----------------------------
+for chave, valor in codigos_paginas.items():
+
+    # Acessa o site da Mercado livre
+    drive.get(f"https://www.mercadolivre.com.br/mais-vendidos/{valor}")
+    sleep(3)
+
+    # Seleciona cards
+    produtos = drive.find_elements(By.XPATH, "//li[contains(@class, 'ui-search-layout__item')]")
+
+    dados = []
+
+    # Loop para extrair os dados dos produtos
+    for item in produtos:
+        nome = extrair(item, ".//a")
+        vendedor = extrair(item, ".//span[contains(@style, 'color:#191919')]")
+        classificacao = extrair(item, ".//span[@style='color:#FFFFFF;background-color:#FF7733']")
+        ...
+
+        # Os dados são adicionados em uma lista-dicionário
+        dados.append({
+            "produto": nome,
+            "vendedor": vendedor if vendedor is not None else "Não Informado",
+            "classificacao": int(classificacao.replace("º MAIS VENDIDO", "")),
+            ...
+        })
+            """)
+
+
+
+# ---------------------
+# * Código Completo
+# ---------------------
 st.divider()
 st.title('📄 Código Completo')
-st.write('Abaixo contém o código completo do script de extração.')
+st.write('Abaixo contém o :red[**código completo**] do script de extração.')
 
 st.markdown("""
 ```python

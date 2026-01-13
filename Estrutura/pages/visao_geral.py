@@ -109,3 +109,5 @@ st.write("""
          """)
 
 
+st.subheader('▶ Agradecimentos Finais')
+st.write('Muito obrigado por visitar o meu projeto. Fique a vontade para clonar o repositório no GitHub e modificá-lo! :)')
