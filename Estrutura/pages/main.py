@@ -80,7 +80,7 @@ def carregar_arquivo(escolha_usuario: str, dicionario: dict) -> pd.DataFrame | N
 
     nome_arquivo = dicionario[escolha_usuario]
     caminho = Path(__file__).parent.parent.parent / \
-        'Estrutura' / 'data' / f'{nome_arquivo}.csv'
+        'Estrutura' / 'data' / 'files' / f'{nome_arquivo}.csv'
 
     return pd.read_csv(caminho)
 
