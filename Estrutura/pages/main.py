@@ -38,16 +38,16 @@ st.write(
     'Este dashboard aprensenta uma análise dos produtos mais vendidos do site da **:yellow[Mercado Livre]**, coletados diretamente  utilizando **:green[Web Scraping]** para auxiliar análises exploratórias e comparativas.')
 
 # * Links para acessar as outras páginas do projeto
-st.write('▶ Clique nos títulos abaixo e explore mais sobre o Projeto!')
+st.write(':red[▶] Clique nos títulos abaixo e explore mais sobre o Projeto!')
 botao1, botao2, botao3 = st.columns(3)
 with botao1:
-    st.page_link('Estrutura/pages/visao_geral.py', label='Visão Geral do Projeto', icon=':material/reply:', width='stretch')
+    st.page_link('Estrutura/pages/visao_geral.py', label=':blue[***Visão Geral do Projeto***]', icon=':material/reply:', width='stretch')
 
 with botao2:
-    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ Repositório do Projeto', width='stretch')
+    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ :orange[***Repositório do Projeto***]', width='stretch')
 
 with botao3:
-    st.page_link('Estrutura/pages/web_scraping.py', label='Extração de Dados', icon=':material/prompt_suggestion:', width='stretch')
+    st.page_link('Estrutura/pages/web_scraping.py', label=':red[***Extração de Dados***]', icon=':material/prompt_suggestion:', width='stretch')
 
 
 # Lista estilizada (visível ao usuário)

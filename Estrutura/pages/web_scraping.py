@@ -35,16 +35,16 @@ st.write('Abaixo ressaltarei as partes mais relevântes do código para melhor e
 
 
 # * Link para acessar as outras páginas do site
-st.write('▶ Clique nos títulos abaixo e explore mais sobre o Projeto!')
+st.write(':red[▶] Clique nos títulos abaixo e explore mais sobre o Projeto!')
 botao1, botao2, botao3 = st.columns(3)
 with botao1:
-    st.page_link('Estrutura/pages/main.py', label='Analise dos Produtos', icon=':material/reply:', width='stretch')
+    st.page_link('Estrutura/pages/main.py', label=':blue[***Análise dos Produtos***]', icon=':material/reply:', width='stretch')
 
 with botao2:
-    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ Repositório do Projeto', width='stretch')
+    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ :orange[***Repositório do Projeto***]', width='stretch')
 
 with botao3:
-    st.page_link('Estrutura/pages/web_scraping.py', label='Extração de Dados', icon=':material/prompt_suggestion:', width='stretch')
+    st.page_link('Estrutura/pages/visao_geral.py', label=':red[***Visão Geral do Projeto***]', icon=':material/prompt_suggestion:', width='stretch')
 
 # -------------------------------
 # * Parâmetros das categorias
