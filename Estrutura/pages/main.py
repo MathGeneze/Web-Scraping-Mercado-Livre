@@ -6,7 +6,10 @@ import base64
 import plotly.express as px
 from pathlib import Path
 
-st.logo(image="https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-lighttext.png", size='large')
+
+# Carregando o logo do site
+logo_path = Path(__file__).parent.parent / 'style' / 'image' / 'streamlit_logo.png'
+st.logo(image=logo_path, size='large')
 
 
 # -------------------------------------------
