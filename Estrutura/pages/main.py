@@ -38,7 +38,7 @@ with open(css_path, encoding="utf-8") as f:
 # ---------------------------
 st.title('📦 Analisador de Produtos - Mercado Livre')
 st.write(
-    'Este dashboard aprensenta uma análise dos produtos mais vendidos do site da **:yellow[Mercado Livre]**, coletados diretamente  utilizando **:green[Web Scraping]** para auxiliar análises exploratórias e comparativas.')
+    'Este dashboard aprensenta uma análise dos produtos mais vendidos do site do **:yellow[Mercado Livre]**, coletados diretamente  utilizando **:green[Web Scraping]** para auxiliar análises exploratórias e comparativas. Os arquivos estão salvos em um :green[**Banco de Dados**].')
 
 
 # -------------------------------

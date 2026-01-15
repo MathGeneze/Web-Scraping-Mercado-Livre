@@ -15,7 +15,7 @@ st.title('💡 Introdução')
 st.write("""
          Este projeto é um :yellow[**ETL simples**]  (processo que envolve :orange[**Extração**], :blue[**Transformação**] e :green[**Carregamento**] de dados) separados em 2 partes:
          
-         * :orange[**Parte 1**] (**Extração** e **Transformação**): O script principal extrai automaticamente dados de produtos do site da Mercado Livre. Durante a extração, o programa trata os dados e os armazena em um arquivo CSV.
+         * :orange[**Parte 1**] (**Extração** e **Transformação**): O script principal extrai automaticamente dados de produtos do site da Mercado Livre. Durante a extração, o programa trata os dados e os armazena em um Banco de Dados com SQLite.
          
          * :blue[**Parte 2**] (**Carregamento**): A parte de visualização desses dados acontece neste site através do :red[**Streamlit**], onde se pode ter informações detalhadas sobre esses dados. 
          """)
