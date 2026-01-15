@@ -6,7 +6,7 @@ import base64
 import plotly.express as px
 from pathlib import Path
 
-st.logo(image="https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-lighttext.png",size='large' )
+st.logo(image="https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-lighttext.png", size='large')
 
 
 # -------------------------------------------
@@ -50,11 +50,11 @@ df = pd.read_sql('SELECT * FROM produtos', conexao)
 # -------------------------
 # * Filtros de Pesquisa
 # -------------------------
-tab1, tab2, tab3 = st.tabs(['📦 Tabela de Produtos', '📈 Estatísticas Gerais', '📊 Gráfico Dinâmico'])
+tab1, tab2, tab3 = st.tabs(
+    ['📦 Tabela de Produtos', '📈 Estatísticas Gerais', '📊 Gráfico Dinâmico'])
 with tab1:
     st.subheader('🔍 Filtros de Pesquisa')
     st.write('Use os filtros abaixo para refinar os dados exibidos na tabela.')
-
 
     # ---------------------------------
     # * Expander contendo os filtros
@@ -129,7 +129,8 @@ with tab1:
                     classificacao_valor_padrao = [
                         classificacao[0], classificacao[-1]]
             else:
-                classificacao_valor_padrao = [classificacao[0], classificacao[-1]]
+                classificacao_valor_padrao = [
+                    classificacao[0], classificacao[-1]]
 
             classificacao_escolha = st.select_slider(
                 label=':orange[▶] Classificação:',
@@ -142,7 +143,8 @@ with tab1:
             classificacao_escolha = None
 
         # ! Filtro Preço Original (atualizado dinamicamente)
-        precos_originais = list(df_categoria_filtrado['preco_original'].dropna())
+        precos_originais = list(
+            df_categoria_filtrado['preco_original'].dropna())
         if precos_originais:
             valor_min = int(min(precos_originais))
             valor_max = int(max(precos_originais))
@@ -199,14 +201,13 @@ with tab1:
 
                 # Limpar apenas as chaves dos filtros
                 filtro_keys = ['categoria_filtro', 'qtd_vendas_filtro', 'vendedor_filtro',
-                            'avaliacao_filtro', 'classificacao_filtro', 'preco_original_filtro',
-                            'preco_final_filtro', 'data_filtro']
+                               'avaliacao_filtro', 'classificacao_filtro', 'preco_original_filtro',
+                               'preco_final_filtro', 'data_filtro']
 
                 for key in filtro_keys:
                     if key in st.session_state:
                         del st.session_state[key]
                 st.rerun()
-
 
     # -----------------------------------------
     # * Cópia do DataFrame para Estilização
@@ -217,7 +218,8 @@ with tab1:
     # * Modificações na cópia do DataFrame para ficar mais agradável visualmente
     df_filtrado['vendedor'] = df_filtrado['vendedor'].apply(
         lambda x: '❌ Não Informado' if x == 'Não Informado' else f'✅ {x}')
-    df_filtrado['produto'] = df_filtrado['produto'].apply(lambda x: f'{x[:40]}...')
+    df_filtrado['produto'] = df_filtrado['produto'].apply(
+        lambda x: f'{x[:40]}...')
     df_filtrado['categoria'] = df_filtrado['categoria'].apply(
         lambda x: x.capitalize())
     df_filtrado['data_coleta'] = pd.to_datetime(df['data_coleta'])
@@ -235,7 +237,8 @@ with tab1:
     # Filtro de Vendedor
     if vendedor_escolha != 'Todos':
         vendedor_formatado = '❌ Não Informado' if vendedor_escolha == 'Não Informado' else f'✅ {vendedor_escolha}'
-        df_filtrado = df_filtrado[df_filtrado['vendedor'] == vendedor_formatado]
+        df_filtrado = df_filtrado[df_filtrado['vendedor']
+                                  == vendedor_formatado]
 
     # Filtro de Classificação
     if classificacao_escolha:
@@ -259,8 +262,8 @@ with tab1:
 
     # Filtro de Avaliação
     if avaliacao_escolha:
-        df_filtrado = df_filtrado[df_filtrado['avaliacao'].isin(avaliacao_escolha)]
-
+        df_filtrado = df_filtrado[df_filtrado['avaliacao'].isin(
+            avaliacao_escolha)]
 
     # --------------------------
     # * DataFrame Estilizado
@@ -315,7 +318,6 @@ with tab1:
         }
     )
 
-
     # ------------------------------------------------------
     # * Expander contendo informações técnicas da tabela atual
     # ------------------------------------------------------
@@ -334,7 +336,7 @@ with tab1:
         # Nova tabela contendo as informações detalhadas
         st.dataframe(
             pd.DataFrame({
-                "Tipos de Dados": df.dtypes,
+                "Tipos de Dados": df.dtypes.astype(str),
                 "Valores Não Nulos": df.notnull().sum(),
                 "Valores Nulos": df.isnull().sum()
             })
@@ -344,7 +346,6 @@ with tab1:
         with st.popover('Dica!', icon=':material/done_outline:'):
             st.info(
                 'Clique no :blue[Nome das Colunas] para aplicar um filtro de ordem :green[Crescente] / :red[Decrescente].', icon=':material/warning:', )
-
 
     # -------------------------------------------------
     # * Pop-Up para detalhamento individual dos produtos
@@ -395,7 +396,7 @@ with tab1:
             # * ------ Vendedor ------ #
             vendedor = df['vendedor'][id_produto]
             st.write(f":red[✘ Vendedor não informado.]" if vendedor ==
-                    'Não Informado' else f" ▶ Vendedor: **:orange[{vendedor}]**")
+                     'Não Informado' else f" ▶ Vendedor: **:orange[{vendedor}]**")
 
             # * ----- Classificação ------ #
             st.write(
@@ -422,9 +423,9 @@ with tab1:
 
             # * ----- Botão para a página original do produto ----- #
             st.link_button('Clique para acessar o produto',
-                        url=df['link'][id_produto],
-                        width='stretch',
-                        icon=':material/keyboard_double_arrow_right:')
+                           url=df['link'][id_produto],
+                           width='stretch',
+                           icon=':material/keyboard_double_arrow_right:')
 
 
 with tab2:
@@ -432,7 +433,8 @@ with tab2:
     # * Estatísticas Gerais
     # -------------------------
     st.subheader('📈 Estatísticas Gerais')
-    st.write('Explore as estatísticas de cada categoria e tire suas próprias conclusões.')
+    st.write(
+        'Explore as estatísticas de cada categoria e tire suas próprias conclusões.')
 
     # Dicionário com o nome dos arquivos
     nome_arquivos = {
@@ -443,7 +445,6 @@ with tab2:
         '📸 Informática': 'Informatica',
         '🎮 Video Game': 'Video game'
     }
-
 
     # Controle de Segmento para ficar visualmente mais facil de alterar entre as categorias
     aba = st.pills(
@@ -465,11 +466,11 @@ with tab2:
     metrica1, metrica2, metrica3 = st.columns(3)
     metrica4, metrica5, metrica6 = st.columns(3)
 
-
     # --------------------------------
     # * Função que cria uma métrica
     # --------------------------------
     # Função que cria uma métrica personalizada
+
     def metrica(metrica, titulo, funcao, delta=False, valor_delta=0, cor_delta='normal'):
         with metrica:
             if delta == False:
@@ -487,15 +488,15 @@ with tab2:
                     border=True
                 )
 
-
     if df_metrica is not None:
-        
+
         # ! Quantidade de Produtos
-        metrica(metrica=metrica1, titulo='Quantidade de Produtos', funcao=funcao.qtd_produtos(df_metrica), delta=True, valor_delta="100%", cor_delta='off')
-        
+        metrica(metrica=metrica1, titulo='Quantidade de Produtos', funcao=funcao.qtd_produtos(
+            df_metrica), delta=True, valor_delta="100%", cor_delta='off')
+
         # ! Média de Preço sem Desconto
         metrica(metrica=metrica2, titulo='Média de Preço sem Desconto',
-            funcao=f"{funcao.media_preco_original(df_metrica):.2f}")
+                funcao=f"{funcao.media_preco_original(df_metrica):.2f}")
 
         #  Calculando o valor entre as médias em forma de porcentagem
         df_desc = df_metrica[df_metrica['preco_final'].notna() & (
@@ -504,7 +505,8 @@ with tab2:
         # Média dos preços sem (media original) e com desconto (media final)
         media_original = df_desc['preco_original'].mean()
         media_final = df_desc['preco_final'].mean()
-        diferenca_percentual = ((media_original - media_final) / media_original) * 100
+        diferenca_percentual = (
+            (media_original - media_final) / media_original) * 100
 
         # ! Média de Preço com Desconto
         metrica(metrica=metrica3, titulo='Média de Preço com Desconto',
@@ -513,18 +515,18 @@ with tab2:
         # ! Produto mais barato
         metrica(metrica=metrica4, titulo='Produto mais barato',
                 funcao=funcao.produto_mais_barato(df_metrica))
-        
+
         # ! Produto mais caro
         metrica(metrica=metrica5, titulo='Produto mais caro',
                 funcao=funcao.produto_mais_caro(df_metrica))
-        
+
         # ! Soma total de preços
         metrica(metrica=metrica6, titulo='Soma total de preços',
                 funcao=funcao.soma_total(df_metrica))
 
     else:
         st.warning('Selecione uma categoria para ver as estatísticas.',
-                icon=':material/warning:')
+                   icon=':material/warning:')
 
 
 # --------------------------------
@@ -544,15 +546,16 @@ with tab3:
         st.warning('Nenhuma categoria selecionada!', icon=':material/warning:')
     else:
         categoria_grafico = nome_arquivos[escolha]
-        df_grafico = df[df['categoria'].str.lower() == categoria_grafico.lower()].copy()
+        df_grafico = df[df['categoria'].str.lower(
+        ) == categoria_grafico.lower()].copy()
 
         coluna1, coluna2, coluna3 = st.columns(3)
         with coluna1:
             opcao1 = st.selectbox('Selecione a 1ª coluna:',
-                                df_grafico.columns.drop(['imagem', 'link']))
+                                  df_grafico.columns.drop(['imagem', 'link']))
         with coluna2:
             opcao2 = st.selectbox('Selecione a 2ª coluna:',
-                                df_grafico.columns.drop(['imagem', 'link', opcao1]))
+                                  df_grafico.columns.drop(['imagem', 'link', opcao1]))
         with coluna3:
             orientacao = st.selectbox(
                 'Orientação:', ['Horizontal', 'Vertical'], index=0)
@@ -563,12 +566,12 @@ with tab3:
         # Criar gráfico com orientação dinâmica
         if orientacao == 'Horizontal':
             grafico = px.bar(df_grafico, y=opcao1, x=opcao2, color=opcao1, orientation='h',
-                            title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].',
-                            text_auto=True, height=altura_grafico)
+                             title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].',
+                             text_auto=True, height=altura_grafico)
         else:
             grafico = px.bar(df_grafico, x=opcao1, y=opcao2, color=opcao1,
-                            title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].',
-                            text_auto=True, height=500)
+                             title=f'➤ Comparação entre as colunas: [{opcao1}] X [{opcao2}].',
+                             text_auto=True, height=500)
 
         st.plotly_chart(grafico, use_container_width=True)
 
@@ -576,7 +579,8 @@ with tab3:
 # * Links para acessar as outras páginas do projeto
 st.divider()
 st.subheader('🌐 Acesso a outras páginas')
-st.write(':green[**Clique**] nos botões abaixo e conheça mais sobre o Projeto!')
+st.write(
+    ':green[**Clique**] nos botões abaixo e conheça mais sobre o Projeto!')
 
 botao1, botao2, botao3 = st.columns(3)
 with botao1:
@@ -584,11 +588,10 @@ with botao1:
         st.switch_page('Estrutura/pages/visao_geral.py')
 
 with botao2:
-    st.link_button('★ :orange[***Repositório do Projeto***]', url='https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', width='stretch')
+    st.link_button('★ :orange[***Repositório do Projeto***]',
+                   url='https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', width='stretch')
 
 
 with botao3:
     if st.button(':red[***Extração de Dados***]', icon=':material/prompt_suggestion:', width='stretch'):
         st.switch_page('Estrutura/pages/web_scraping.py')
-
-
