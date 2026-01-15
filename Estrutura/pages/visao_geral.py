@@ -54,7 +54,7 @@ st.title('🖥️ Tecnologias Utilizadas')
 st.write('Abaixo segue a lista das tecnologias utilizadas neste projeto:')
 
 # ! Usuário seleciona uma tecnologia e abre um card com sua descrição
-tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', ['Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
+tecnologia = st.selectbox('Selecione uma tecnologia e veja sua descrição:', ['Nenhum', 'Python', 'Selenium', 'Pandas', 'Streamlit', 'Plotly', 'SQLite'], help='Abaixo contém a descrição de cada tecnologia e sua importância no projeto.')
 
 
 coluna1, coluna2 = st.columns(2)
@@ -74,12 +74,13 @@ if tecnologia != 'Nenhum':
                     cor = 'yellow'
                 elif texto == 'Selenium':
                     cor = 'green'
-                elif texto == 'Pandas':
+                elif texto == 'Pandas' or texto == 'SQLite':
                     cor = 'blue'
                 elif texto == 'Streamlit':
                     cor = 'red'
                 elif texto == 'Plotly':
                     cor = 'orange'
+
                 st.subheader(f'Pra que serve o :{cor}[{texto}]?')
 
             texto_colorido(tecnologia)
@@ -101,8 +102,6 @@ st.write('Esse foi um projeto no qual eu aprendi que coletar dados vai muito al�
 st.subheader('▶ Ideias de Melhorias Futuras')
 st.write("""
          Atualmente, o projeto possui algumas limitações, como: 
-         * :red[✘ **Problema**]: Dados salvos em pastas locais do projeto;
-            * :green[✔ **Solução**]: Salvar os dados em um Banco de Dados.
          * :red[✘ **Problema**]: O usuário que utilizar apenas o site, não consegue atualizar os dados;
             * :green[✔ **Solução**]: Criar um botão que rode o scrpit de extração e atualize os dados.
          """)
@@ -111,14 +110,21 @@ st.write("""
 st.subheader('▶ Agradecimentos Finais')
 st.write('Muito obrigado por visitar o meu projeto. Fique a vontade para clonar o repositório no GitHub e modificá-lo! :)')
 
+# -------------------------------------------------
 # * Link para acessar as outras páginas do site
-st.write(':red[▶] Clique nos títulos abaixo e explore mais sobre o Projeto!')
+# -------------------------------------------------
+st.divider()
+st.subheader('🌐 Acesso a outras páginas')
+st.write(':green[**Clique**] nos botões abaixo e conheça mais sobre o Projeto!')
+
 botao1, botao2, botao3 = st.columns(3)
 with botao1:
-    st.page_link('Estrutura/pages/main.py', label=':blue[***Análise dos Produtos***]', icon=':material/reply:', width='stretch')
+    if st.button(':blue[***Análise dos Produtos***]', icon=':material/reply:', width='stretch'):
+        st.switch_page('Estrutura/pages/main.py')
 
 with botao2:
-    st.page_link('https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', label='★ :orange[***Repositório do Projeto***]', width='stretch')
+    st.link_button('★ :orange[***Repositório do Projeto***]', url='https://github.com/MathGeneze/Web-Scraping-Mercado-Livre', width='stretch')
 
 with botao3:
-    st.page_link('Estrutura/pages/web_scraping.py', label=':red[***Extração de Dados***]', icon=':material/prompt_suggestion:', width='stretch')
+    if st.button(':red[***Extração de Dados***]', icon=':material/prompt_suggestion:', width='stretch'):
+        st.switch_page('Estrutura/pages/web_scraping.py')

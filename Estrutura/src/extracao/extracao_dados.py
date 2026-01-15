@@ -68,7 +68,7 @@ for chave, valor in codigos_paginas.items():
 
     # Acessa o site da Mercado livre
     drive.get(f"https://www.mercadolivre.com.br/mais-vendidos/{valor}")
-    sleep(5)
+    sleep(7)
 
     # Carrega mais conteúdo scrollando
     actions = ActionChains(drive)
@@ -78,7 +78,7 @@ for chave, valor in codigos_paginas.items():
     # Seleciona cards
     produtos = drive.find_elements(
         By.XPATH, "//li[contains(@class, 'ui-search-layout__item')]")
-    
+
     dados = []
 
     # Loop para extrair os dados dos produtos
@@ -106,25 +106,24 @@ for chave, valor in codigos_paginas.items():
             "vendedor": vendedor if vendedor is not None else "Não Informado",
             "classificacao": int(classificacao.replace("º MAIS VENDIDO", "")) if classificacao else None,
             "qtd_vendas": int(qtd_vendas) if qtd_vendas else None,
-            "avaliacao": avaliacao,
+            "avaliacao": avaliacao if isinstance(avaliacao, float) else None,
             "preco_original": float(preco_original.replace(".", "")) if preco_original is not None else None,
             "preco_final": float(preco_final.replace(".", "")) if preco_final is not None else None,
             "imagem": imagem,
             "link": link,
-            'data_coleta': date.today()
+            'data_coleta': pd.to_datetime(date.today())
         })
 
     # Os dados são salvos em um Dataframe, convertidos para csv e salvos no banco de dados
     df = pd.DataFrame(dados)
-    df.to_csv(f"Estrutura/data/files/{chave}.csv", index=False, encoding="utf-8")
 
-    
     # * Criando a conexão com o banco de dados para salva-los
     conn = sqlite3.connect('Estrutura/data/banco.db')
     df.to_sql('produtos', conn, if_exists='append', index=False)
     conn.close()
-    
-    print(f"✔ {len(df)} itens salvos em {chave}.csv e na tabela 'produtos' do banco de dados")
+
+    print(
+        f"✔ {len(df)} itens salvos em {chave}.csv e na tabela 'produtos' do banco de dados")
     sleep(2.5)
 
 drive.quit()

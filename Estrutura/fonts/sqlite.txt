@@ -1,0 +1,2 @@
+:green[SQLite] é um :green[**Banco de Dados**] relacional leve e eficiente, ideal para aplicações locais.
+Neste projeto, ele armazena todos os dados coletados do web scraping de forma estruturada, permitindo :green[**consultas rápidas**] e :green[**gerenciamento eficiente**] dos produtos do Mercado Livre sem depender de servidores externos.
