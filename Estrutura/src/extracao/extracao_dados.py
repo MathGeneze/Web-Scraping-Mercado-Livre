@@ -111,7 +111,7 @@ for chave, valor in codigos_paginas.items():
             "preco_final": float(preco_final.replace(".", "")) if preco_final is not None else None,
             "imagem": imagem,
             "link": link,
-            'data_coleta': pd.to_datetime(date.today())
+            'data_coleta': date.today()
         })
 
     # Os dados são salvos em um Dataframe, convertidos para csv e salvos no banco de dados

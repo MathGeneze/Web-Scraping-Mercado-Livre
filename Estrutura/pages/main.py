@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 # Carregando o logo do site
-logo_path = Path(__file__).parent.parent / 'style' / 'image' / 'streamlit_logo.png'
+logo_path = Path(__file__).parent.parent / 'style' / \
+    'image' / 'streamlit_logo.png'
 st.logo(image=logo_path, size='large')
 
 
@@ -197,9 +198,9 @@ with tab1:
         # --------------------------------
         # * Botão para Limpar Filtros
         # --------------------------------
-        col_botao_limpar, col_botao_aplicar = st.columns(2)
+        botao01, botao02 = st.columns(2)
 
-        with col_botao_limpar:
+        with botao01:
             if st.button('🗑️ Limpar Filtros', use_container_width=True):
 
                 # Limpar apenas as chaves dos filtros
@@ -211,7 +212,22 @@ with tab1:
                     if key in st.session_state:
                         del st.session_state[key]
                 st.rerun()
+        
+        # * Botão de Download 
+        with botao02:
+            csv_data = df.to_csv(index=False)
+            st.download_button(
+                label='Baixar os dados em CSV',
+                data=csv_data,
+                file_name='produtos.csv',
+                mime='text/csv',
+                icon=':material/download:',
+                width='stretch',
+                help='Baixa os dados da tabela em formato CSV'
+            )
 
+            
+             
     # -----------------------------------------
     # * Cópia do DataFrame para Estilização
     # -----------------------------------------
@@ -227,7 +243,8 @@ with tab1:
         lambda x: x.capitalize())
     df_filtrado['data_coleta'] = pd.to_datetime(df['data_coleta'])
 
-    maximo = df['preco_original'].max()
+    maximo1 = df['preco_original'].max()
+    maximo2 = (df['preco_final']).max()
 
     # ---------------------------------------------
     # * Aplicando os filtros na tabela estilizada
@@ -297,7 +314,7 @@ with tab1:
                 label='Preço Original',
                 format='R$ %d',
                 min_value=0,
-                max_value=maximo,
+                max_value=maximo1,
                 help=':red[➤] Preço :red[**antes do desconto**] ser aplicado'
             ),
 
@@ -305,7 +322,7 @@ with tab1:
                 label='Preço Final',
                 format='R$ %d',
                 min_value=0,
-                max_value=maximo,
+                max_value=maximo2,
                 help=':green[➤] Preço :green[**depois do desconto**] ser aplicado'
             ),
 
@@ -320,6 +337,7 @@ with tab1:
             ),
         }
     )
+
 
     # ------------------------------------------------------
     # * Expander contendo informações técnicas da tabela atual
