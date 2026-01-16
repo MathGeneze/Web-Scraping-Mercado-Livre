@@ -145,7 +145,6 @@ Abaixo contém a estrutura do projeto:
 <br>
 
 <!----------- 💡 Aprendizados ---------->
-## 💡 Aprendizados
 ## <a id="aprendizados">💡 Aprendizados</a>
 Este projeto foi extremamente relevante para mim. Além de aprender sobre extração de dados, ainda reforcei meus conhecimentos em SQL e salvei os dados em um banco de dados (no começo do projeto, eles eram salvos em arquivos csv). Também aprendi a importância de planejar a Estrutura de um Projeto, pois ao longo deste espeficadamente, as páginas do site foram surgindo ao longo do tempo sem planejamento. 
 
