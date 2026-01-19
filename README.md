@@ -130,7 +130,7 @@ Abaixo contém a estrutura do projeto:
 ### 3️⃣ Home: Visualização única dos produtos extraídos
 <img width="550" height="550" alt="image" src="https://github.com/user-attachments/assets/8b4bb47c-a77e-4c83-ba94-e22dca83682f" />
 
-### 4️⃣ Home: Estatísticas dos produtos 
+### 4️⃣ Home: Métricas dos dados com KPI's 
 <img width="550" height="550" alt="image" src="https://github.com/user-attachments/assets/52ae2f7e-aaca-4cc3-9a70-8e44a3d116db" />
 
 ### 5️⃣ Home: Gráfico Dinâmico 
