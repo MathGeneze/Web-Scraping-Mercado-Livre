@@ -1,7 +1,6 @@
 # Web Scraping - Mercado Livre
 Coletor e Analisador de Dados da Mercado Livre com Python, Selenium e Streamlit.
 
-<br>
 
 <!----------- 📁 Sumário ---------->
 ## 📁 Sumário
